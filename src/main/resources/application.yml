@@ -1,0 +1,11 @@
+server:
+  port: 9093
+spring:
+  jpa:
+    show-sql: true
+  datasource:
+    name: postgres
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: admin
+    password: root
+    driverClassName: org.postgresql.Driver
