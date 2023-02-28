@@ -18,7 +18,6 @@ public class UserController {
     }
 
     @PostMapping("api/user/create")
-    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<?> create(@RequestBody UserDTO userDTO){
         UserDTO userResponse = usersService.createUser(userDTO);
         if(userResponse != null){
