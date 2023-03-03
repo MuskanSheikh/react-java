@@ -1,7 +1,7 @@
 package reactjavaproject.reactJavaProject.services.Implementation;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import reactjavaproject.reactJavaProject.entity.Users;
@@ -14,11 +14,13 @@ import java.util.Optional;
 @Service
 public class UsersServiceImpl implements UsersService {
 
-    private final PasswordEncoder passwordEncoder;
+
+    private  final BCryptPasswordEncoder encoder;
 
     private final UserRepository userRepository;
-    public UsersServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository) {
-        this.passwordEncoder = passwordEncoder;
+    public UsersServiceImpl(BCryptPasswordEncoder encoder, UserRepository userRepository) {
+        this.encoder = encoder;
+
         this.userRepository = userRepository;
     }
 
@@ -31,7 +33,7 @@ public class UsersServiceImpl implements UsersService {
         users.setLastName(userDTO.getLastName());
         users.setEmail(userDTO.getEmail());
         users.setPhone(userDTO.getPhone());
-        users.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        users.setPassword(encoder.encode(userDTO.getPassword()));
         userRepository.save(users);
         return UserDTO.getEntity(users);
     }
