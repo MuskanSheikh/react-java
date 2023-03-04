@@ -21,11 +21,8 @@ import java.security.NoSuchAlgorithmException;
 @RestController
 @RequestMapping("api/v1/")
 public class UserController {
-
     private final UsersService usersService;
-
     private final AuthenticationManager authenticationManager;
-
     private final JWTAuthHelper jwtAuthHelper;
 
     public UserController(UsersService usersService, AuthenticationManager authenticationManager, JWTAuthHelper jwtAuthHelper) {
