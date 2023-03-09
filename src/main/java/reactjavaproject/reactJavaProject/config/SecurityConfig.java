@@ -24,7 +24,7 @@ import org.springframework.web.filter.CorsFilter;
 @EnableWebSecurity
 public class SecurityConfig {
     @Autowired
-    private JWTAuthHelper jwtAuthHelper;
+    private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
@@ -65,7 +65,7 @@ public class SecurityConfig {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
         http.authorizeHttpRequests((request) -> request.requestMatchers("/**").permitAll().requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                         .anyRequest().authenticated())
-                .addFilterBefore(new JWTAuthenticationFilter(userDetailsService,jwtAuthHelper), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JWTAuthenticationFilter(userDetailsService, jwtTokenUtil), UsernamePasswordAuthenticationFilter.class);
 //        http.authorizeHttpRequests().anyRequest().authenticated()
 //                .and().formLogin();
 //                .requestMatchers("/**").permitAll()

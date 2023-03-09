@@ -6,10 +6,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
-import reactjavaproject.reactJavaProject.config.JWTAuthHelper;
-import reactjavaproject.reactJavaProject.entity.Users;
+import reactjavaproject.reactJavaProject.config.JwtTokenUtil;
 import reactjavaproject.reactJavaProject.services.UsersService;
 import reactjavaproject.reactJavaProject.web.dto.AuthenticationRequest;
 import reactjavaproject.reactJavaProject.web.dto.LoginResponse;
@@ -26,13 +24,12 @@ public class UserController {
 
     private final AuthenticationManager authenticationManager;
 
-    private final JWTAuthHelper jwtAuthHelper;
+    private final JwtTokenUtil jwtTokenUtil;
 
-    public UserController(UsersService usersService, AuthenticationManager authenticationManager, JWTAuthHelper jwtAuthHelper) {
+    public UserController(UsersService usersService, AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil) {
         this.usersService = usersService;
         this.authenticationManager = authenticationManager;
-        this.jwtAuthHelper = jwtAuthHelper;
-
+        this.jwtTokenUtil = jwtTokenUtil;
     }
 
     @PostMapping("/create")
@@ -50,7 +47,7 @@ public class UserController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserDetails users = (UserDetails) authentication.getPrincipal();
-        String token = jwtAuthHelper.generateToken(users.getUsername());
+        String token = jwtTokenUtil.generateToken(users);
 
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setToken(token);
