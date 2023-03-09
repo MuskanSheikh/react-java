@@ -8,13 +8,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.io.Serializable;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
 @Component
-public class JWTAuthHelper implements Serializable {
+public class JWTAuthHelper {
     @Value("${jwt.auth.app}")
     private String appName;
     @Value("${jwt.auth.secret_key}")

@@ -7,7 +7,7 @@ spring:
       ddl-auto: update
   datasource:
     name: postgres
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5432/rctjava
     username: admin
     password: root
     driverClassName: org.postgresql.Driver
@@ -16,4 +16,4 @@ jwt:
     app: react-java-project
     secret_key: reactjava@123
     expires_in: 3600
-  secret: javainuse
+  secret: reactjava@123
