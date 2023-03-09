@@ -15,6 +15,16 @@ public class UserDTO {
     private String email;
     private String phone;
     private String password;
+    private String role;
+
+    public UserDTO(Users entity) {
+        this.id = entity.getId();
+        this.firstName = entity.getFirstName();
+        this.lastName = entity.getLastName();
+        this.email = entity.getEmail();
+        this.phone= entity.getPhone();
+        this.password = entity.getPassword();
+    }
 
     public static UserDTO getEntity(Users users) {
         UserDTO userDTO= new UserDTO();

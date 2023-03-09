@@ -1,6 +1,9 @@
 package reactjavaproject.reactJavaProject.services.Implementation;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -15,12 +18,14 @@ import java.util.Optional;
 public class UsersServiceImpl implements UsersService {
 
 
-    private  final BCryptPasswordEncoder encoder;
+    private final BCryptPasswordEncoder encoder;
 
     private final UserRepository userRepository;
+
+
+
     public UsersServiceImpl(BCryptPasswordEncoder encoder, UserRepository userRepository) {
         this.encoder = encoder;
-
         this.userRepository = userRepository;
     }
 
@@ -35,6 +40,21 @@ public class UsersServiceImpl implements UsersService {
         users.setPhone(userDTO.getPhone());
         users.setPassword(encoder.encode(userDTO.getPassword()));
         userRepository.save(users);
-        return UserDTO.getEntity(users);
+        return getUserModel(users);
+    }
+
+    @Override
+    public UserDTO getById(Long id) {
+        Optional<Users> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+//            UserDetails userDetails =  userDetailsService.loadUserByUsername(userOptional.get().getEmail());
+//            return getUserModel(userObj);
+        }
+        return null;
+    }
+
+    private UserDTO getUserModel(Users entity) {
+        if (entity == null) throw new UsernameNotFoundException("User does not exist");
+        return new UserDTO(entity);
     }
 }

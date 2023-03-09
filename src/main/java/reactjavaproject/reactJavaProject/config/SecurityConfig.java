@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -51,6 +52,7 @@ public class SecurityConfig {
         return filterRegistrationBean;
     }
     @Bean
+
     public UserDetailsService getUserDetailService()
     {
         return new UserDetailsServiceImpl();
@@ -63,7 +65,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
-        http.authorizeHttpRequests((request) -> request.requestMatchers("/**").permitAll().requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+        http.authorizeHttpRequests((request) -> request.requestMatchers("/api/v1/auth/login","/api/create").permitAll()
+                        .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(new JWTAuthenticationFilter(userDetailsService, jwtTokenUtil), UsernamePasswordAuthenticationFilter.class);
 //        http.authorizeHttpRequests().anyRequest().authenticated()
