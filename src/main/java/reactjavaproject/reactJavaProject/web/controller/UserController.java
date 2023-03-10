@@ -32,6 +32,6 @@ public class UserController {
             response.setPassword("");
         return new ResponseEntity<>(response, HttpStatus.OK);
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.badRequest().body(" user not found");
     }
 }

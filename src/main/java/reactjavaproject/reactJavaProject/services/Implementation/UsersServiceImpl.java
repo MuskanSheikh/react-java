@@ -49,8 +49,7 @@ public class UsersServiceImpl implements UsersService {
     public UserDTO getById(Long id) {
         Optional<Users> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
-//            UserDetails userDetails =  userDetailsService.loadUserByUsername(userOptional.get().getEmail());
-//            return getUserModel(userObj);
+            return getUserModel(userOptional.get());
         }
         return null;
     }
