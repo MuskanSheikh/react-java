@@ -3,11 +3,13 @@ package reactjavaproject.reactJavaProject.web.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import reactjavaproject.reactJavaProject.entity.Users;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class UserDTO {
     private Long id;
     private String firstName;
@@ -24,14 +26,6 @@ public class UserDTO {
         this.email = entity.getEmail();
         this.phone= entity.getPhone();
         this.password = entity.getPassword();
-    }
-
-    public static UserDTO getEntity(Users users) {
-        UserDTO userDTO= new UserDTO();
-        userDTO.setFirstName(users.getFirstName());
-        userDTO.setLastName(users.getLastName());
-        userDTO.setEmail(users.getEmail());
-        userDTO.setPhone(userDTO.getPhone());
-        return userDTO;
+        this.role = entity.getRole();
     }
 }

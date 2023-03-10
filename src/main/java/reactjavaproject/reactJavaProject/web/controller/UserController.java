@@ -2,6 +2,7 @@ package reactjavaproject.reactJavaProject.web.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import reactjavaproject.reactJavaProject.services.UsersService;
 import reactjavaproject.reactJavaProject.web.dto.UserDTO;
@@ -15,6 +16,7 @@ public class UserController {
         this.usersService = usersService;
     }
     @PostMapping("create")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN_USER')")
     public ResponseEntity<?> registerUser(@RequestBody UserDTO userDTO){
         UserDTO userResponse = usersService.createUser(userDTO);
         if(userResponse != null){

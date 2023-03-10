@@ -8,11 +8,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import reactjavaproject.reactJavaProject.config.JwtTokenUtil;
+import reactjavaproject.reactJavaProject.entity.Users;
+import reactjavaproject.reactJavaProject.repository.UserRepository;
 import reactjavaproject.reactJavaProject.web.dto.AuthenticationRequest;
 import reactjavaproject.reactJavaProject.web.dto.LoginResponse;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/")
@@ -21,9 +24,12 @@ public class AuthorityController {
 
     private final JwtTokenUtil jwtTokenUtil;
 
-    public AuthorityController(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil) {
+    private final UserRepository userRepository;
+
+    public AuthorityController(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil, UserRepository userRepository) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenUtil = jwtTokenUtil;
+        this.userRepository = userRepository;
     }
 
 
@@ -37,7 +43,10 @@ public class AuthorityController {
         String token = jwtTokenUtil.generateToken(users);
 
         LoginResponse loginResponse = new LoginResponse();
+        Optional<Users> optionalEntity = userRepository.findByEmail(authenticationRequest.getUserName());
         loginResponse.setToken(token);
+        loginResponse.setType("Bearer");
+        loginResponse.setRole(optionalEntity.get().getRole());
         return ResponseEntity.ok(loginResponse);
     }
 }

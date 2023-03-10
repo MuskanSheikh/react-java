@@ -3,16 +3,12 @@ package reactjavaproject.reactJavaProject.web.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-public class LoginResponse {
-    private String token;
-
-    private String type = " Bearer";
-
-    private String role;
+public class ErrorResponse {
+    private String code;
+    private String message;
+    private String description;
 }

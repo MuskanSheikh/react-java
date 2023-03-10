@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import reactjavaproject.reactJavaProject.common.EnumUtils;
 import reactjavaproject.reactJavaProject.entity.Users;
 import reactjavaproject.reactJavaProject.repository.UserRepository;
 import reactjavaproject.reactJavaProject.services.UsersService;
@@ -39,6 +40,7 @@ public class UsersServiceImpl implements UsersService {
         users.setEmail(userDTO.getEmail());
         users.setPhone(userDTO.getPhone());
         users.setPassword(encoder.encode(userDTO.getPassword()));
+        users.setRole(String.valueOf(EnumUtils.USER));
         userRepository.save(users);
         return getUserModel(users);
     }
