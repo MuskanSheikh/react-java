@@ -11,9 +11,12 @@ spring:
     username: admin
     password: root
     driverClassName: org.postgresql.Driver
+  application:
+    name: user-service
 jwt:
-  auth:
-    app: react-java-project
-    secret_key: reactjava@123
-    expires_in: 3600
   secret: reactjava@123
+eureka:
+  instance:
+    hostname: localhost
+
+

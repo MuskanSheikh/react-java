@@ -4,11 +4,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import reactjavaproject.reactJavaProject.services.UsersService;
 import reactjavaproject.reactJavaProject.web.dto.UserDTO;
 
 @RestController
-@RequestMapping("api/")
+@RequestMapping("user-api/")
 public class UserController {
     private final UsersService usersService;
 
