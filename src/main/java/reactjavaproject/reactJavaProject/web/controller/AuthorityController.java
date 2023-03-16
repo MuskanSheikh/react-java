@@ -1,5 +1,6 @@
 package reactjavaproject.reactJavaProject.web.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,18 +20,13 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/")
+@RequiredArgsConstructor
 public class AuthorityController {
     private final AuthenticationManager authenticationManager;
 
     private final JwtTokenUtil jwtTokenUtil;
 
     private final UserRepository userRepository;
-
-    public AuthorityController(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil, UserRepository userRepository) {
-        this.authenticationManager = authenticationManager;
-        this.jwtTokenUtil = jwtTokenUtil;
-        this.userRepository = userRepository;
-    }
 
 
     @PostMapping("auth/login")

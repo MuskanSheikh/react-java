@@ -1,8 +1,8 @@
 package reactjavaproject.reactJavaProject.services.Implementation;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,6 +16,7 @@ import reactjavaproject.reactJavaProject.web.dto.UserDTO;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UsersServiceImpl implements UsersService {
 
 
@@ -24,23 +25,17 @@ public class UsersServiceImpl implements UsersService {
     private final UserRepository userRepository;
 
 
-
-    public UsersServiceImpl(BCryptPasswordEncoder encoder, UserRepository userRepository) {
-        this.encoder = encoder;
-        this.userRepository = userRepository;
-    }
-
     @Override
     public UserDTO createUser(UserDTO userDTO) {
         Optional<Users> userEntity = userRepository.findByEmail(userDTO.getEmail());
         if (!userEntity.isEmpty()) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User Already exist");
-        Users users = new Users();
-        users.setFirstName(userDTO.getFirstName());
-        users.setLastName(userDTO.getLastName());
-        users.setEmail(userDTO.getEmail());
-        users.setPhone(userDTO.getPhone());
-        users.setPassword(encoder.encode(userDTO.getPassword()));
-        users.setRole(String.valueOf(EnumUtils.USER));
+        Users users = Users.builder()
+                .firstName(userDTO.getFirstName())
+                .lastName(userDTO.getLastName())
+                .email(userDTO.getEmail())
+                .phone(userDTO.getPhone())
+                .password(encoder.encode(userDTO.getPassword()))
+                .role(String.valueOf(EnumUtils.USER)).build();
         userRepository.save(users);
         return getUserModel(users);
     }

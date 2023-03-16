@@ -1,18 +1,17 @@
 package reactjavaproject.reactJavaProject.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 
-@Entity
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @Table(name = "users")
+@Builder
+@Entity
 public  class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
